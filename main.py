@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
+import uvicorn
 
 # Load environment variables from .env file
 load_dotenv()
@@ -30,3 +31,6 @@ async def generate_text(request_body: PromptRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
     return {"answer": response.choices[0].message.content}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
